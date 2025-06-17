@@ -15,18 +15,14 @@ public class SolarSystemJOGL implements GLEventListener {
     private float moonAngle = 0.0f;
 
     public static void main(String[] args) {
-        // Avoid Java2D-OpenGL conflicts
+
         System.setProperty("sun.java2d.opengl", "false");
 
-        // Print available OpenGL profiles for debugging
-        System.out.println("Available GL Profiles:");
-        System.out.println(GLProfile.glAvailabilityToString());
-
-        // Use the safest profile
+        // use Gl profile
         GLProfile profile = GLProfile.get(GLProfile.GL2);
         GLCapabilities capabilities = new GLCapabilities(profile);
 
-        // Match system-supported bits
+        // Setting bits for design
         capabilities.setRedBits(10);
         capabilities.setGreenBits(10);
         capabilities.setBlueBits(10);
@@ -36,17 +32,20 @@ public class SolarSystemJOGL implements GLEventListener {
         capabilities.setDoubleBuffered(true);
         capabilities.setHardwareAccelerated(true);
 
-        // Create GLWindow instead of GLCanvas
+        // Create GLWindow
         GLWindow window = GLWindow.create(capabilities);
+        // for displaying the window title gl window
         window.setTitle("3D Solar System - JOGL (GLWindow)");
         window.setSize(800, 600);
+        // setting window visible true
         window.setVisible(true);
+        // this setting is used to resize the window size
         window.setResizable(true);
 
         // Attach this class as the GLEventListener
         window.addGLEventListener(new SolarSystemJOGL());
 
-        // Graceful shutdown
+        //  shutdown the window
         window.addWindowListener(new WindowAdapter() {
             @Override
             public void windowDestroyNotify(WindowEvent e) {
@@ -70,7 +69,7 @@ public class SolarSystemJOGL implements GLEventListener {
 
     @Override
     public void dispose(GLAutoDrawable drawable) {
-        // Optional cleanup
+
     }
 
     @Override
@@ -83,22 +82,22 @@ public class SolarSystemJOGL implements GLEventListener {
         gl.glTranslatef(0f, 0f, -20.0f);
 
         // Sun
-        gl.glColor3f(1f, 1f, 0f); // Yellow (Red + Green)
-        drawSphere(gl, 2.0, 30, 30);
+        gl.glColor3f(1f, 1f, 0f); // sun colour ( yellow)
+        drawSphere(gl, 2.0, 30, 30); // To get the sphere shape
 
         // Earth
         gl.glPushMatrix();
         gl.glRotatef(earthAngle, 0f, 1f, 0f);
         gl.glTranslatef(7f, 0f, 0f);
-        gl.glColor3f(0f, 0f, 1f); // blue
-        drawSphere(gl, 1.0, 20, 20);
+        gl.glColor3f(0f, 0f, 1f); // earth colour (Blue)
+        drawSphere(gl, 1.0, 20, 20); // To get the sphere shape
 
         // Moon
         gl.glPushMatrix();
         gl.glRotatef(moonAngle, 0f, 1f, 0f);
         gl.glTranslatef(2f, 0f, 0f);
-        gl.glColor3f(0.5f, 0.5f, 0.5f); // gray
-        drawSphere(gl, 0.3, 15, 15);
+        gl.glColor3f(0.5f, 0.5f, 0.5f); // Moon colour (gray)
+        drawSphere(gl, 0.3, 15, 15); // To get the sphere shape
         gl.glPopMatrix();
 
         gl.glPopMatrix();
